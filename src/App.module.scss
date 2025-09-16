@@ -28,6 +28,7 @@
   --memoinput-border: #3282B8;
   --task-bg: #68afdf;
   --task-done-color: #727272;
+  --task-done-bg: #b8d5ee; // お好みで薄い青系
 }
 
 // テーマB
@@ -59,7 +60,8 @@
   --main-color: #8785A2;
   --memoinput-border: #FFC7C7;
   --task-bg: #FFE2E2;
-  --task-done-color: #727272;
+  --task-done-color: #bbbaba;
+  --task-done-bg: #fdefef; // お好みで薄いピンク系
 }
 
 // 以降、色指定をすべて変数で統一
@@ -235,6 +237,7 @@ html {
             text-decoration: line-through;
             color: var(--task-done-color);
             transition: background 1s, color 1s;
+            opacity: 0.5;
           }
 
           .grab {
@@ -308,10 +311,6 @@ html {
         }
       }
     }
-  }
-
-  .displayFlex {
-    display: flex;
   }
 
   .inputBtnContainer {
@@ -507,5 +506,10 @@ html {
     &:active {
       background: var(--btn-active);
     }
+  }
+
+  .taskItem.done {
+    background: var(--task-done-bg) !important;
+    opacity: 0.5;
   }
 }

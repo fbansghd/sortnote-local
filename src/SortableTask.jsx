@@ -26,7 +26,7 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay }) {
           : { opacity: 1, scale: 1, y: 0 }
       }
       transition={{ duration: 0.18 }}
-      className={`${styles.taskItem} ${isDragging ? styles.dragging : ""}`}
+      className={`${styles.taskItem} ${done ? styles.done : ""} ${isDragging ? styles.dragging : ""}`}
       style={{
         transform: CSS.Transform.toString(transform),
         transition: transition || "transform 200ms cubic-bezier(0.2, 0, 0, 1)",
