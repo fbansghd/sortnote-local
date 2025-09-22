@@ -28,7 +28,7 @@ function App() {
     handleDragCancel,
   } = useMemos();
 
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   // カテゴリー折りたたみ状態をlocalStorageで保存・復元
   const [collapsedCategories, setCollapsedCategories] = useState(() => {
