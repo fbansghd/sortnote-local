@@ -189,6 +189,16 @@ export function useMemos() {
     localStorage.setItem("isAltColor", JSON.stringify(isAltColor));
   }, [isAltColor]);
 
+  // カテゴリの折りたたみ状態
+  const [collapsedCategories, setCollapsedCategories] = useState([]);
+  const toggleCategoryCollapse = (categoryId) => {
+    setCollapsedCategories(prev =>
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
   return {
     text, setText,
     taskInputs, setTaskInputs,
@@ -210,5 +220,7 @@ export function useMemos() {
     handleDragStart,
     handleDragEnd,
     handleDragCancel,
+    collapsedCategories,
+    toggleCategoryCollapse,
   };
 }

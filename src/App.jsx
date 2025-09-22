@@ -1,6 +1,6 @@
 import { DndContext, DragOverlay, closestCenter } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./App.module.scss";
 import SortableTask from "./SortableTask";
 import { useMemos } from "./useMemos";
@@ -20,8 +20,6 @@ function App() {
     deleteMemo,
     showTaskInput,
     toggleTaskInput,
-    showCategoryInput,
-    setShowCategoryInput,
     isAltColor,
     setIsAltColor,
     activeTask,
@@ -29,6 +27,28 @@ function App() {
     handleDragEnd,
     handleDragCancel,
   } = useMemos();
+
+  const [showSidebar, setShowSidebar] = useState(true);
+
+  // カテゴリー折りたたみ状態をlocalStorageで保存・復元
+  const [collapsedCategories, setCollapsedCategories] = useState(() => {
+    const saved = localStorage.getItem("collapsedCategories");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // 保存
+  useEffect(() => {
+    localStorage.setItem("collapsedCategories", JSON.stringify(collapsedCategories));
+  }, [collapsedCategories]);
+
+  // 折りたたみトグル関数
+  const toggleCategoryCollapse = (categoryId) => {
+    setCollapsedCategories(prev =>
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
 
   useEffect(() => {
     document.body.classList.remove(styles.themeA, styles.themeB);
@@ -51,19 +71,24 @@ function App() {
               <span className={styles.slider}></span>
             </label>
           </div>
-          <div className={styles.changeCategory}>
-            <div className={styles.addCategory}>
-              <div>Category+</div>
-              <label className={styles.toggleSwitch}>
-                <input
-                  type="checkbox"
-                  checked={showCategoryInput}
-                  onChange={() => setShowCategoryInput(prev => !prev)}
-                />
-                <span className={styles.slider}></span>
-              </label>
-            </div>
-            {showCategoryInput && (
+          <div className={styles.toggleContainer}>
+            <div>Sidebar</div>
+            <label className={styles.toggleSwitch}>
+              <input
+                type="checkbox"
+                checked={showSidebar}
+                onChange={() => setShowSidebar((prev) => !prev)}
+              />
+              <span className={styles.slider}></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div style={{ display: "flex" }}>
+        {/* サイドバー */}
+        {showSidebar && (
+          <div className={styles.sidebar}>
               <div className={styles.categoryInputStyle}>
                 <input
                   className={styles.categoryInput}
@@ -78,123 +103,147 @@ function App() {
                 >
                   add
                 </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      <br />
-      <div className={styles.category}>
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-          onDragCancel={handleDragCancel}
-        >
-          <SortableContext
-            items={memos.map(cat => cat.id)}
-            strategy={verticalListSortingStrategy}
-          >
-            {memos.map((categoryItem, categoryIndex) => (
-              <SortableCategory
-                key={categoryItem.id}
-                id={categoryItem.id}
-                label={categoryItem.category}
-              >
-                <div className={styles.categoryContainer}>
-                  <div>
-                    <div className={styles.deleteBtn}>
-                      <span
-                        className={styles.deleteIcon}
-                        onClick={() => {
-                          if (window.confirm("本当にこのカテゴリを削除しますか？")) {
-                            deleteMemo(categoryIndex);
-                          }
-                        }}
-                        tabIndex={0}
-                        role="button"
-                        aria-label="カテゴリ削除"
-                        onKeyDown={e =>
-                          (e.key === "Enter" || e.key === " ") &&
-                          window.confirm("本当にこのカテゴリを削除しますか？") &&
-                          deleteMemo(categoryIndex)
-                        }
-                      >
-                        ｘ
-                      </span>
-                    </div>
-                    <SortableContext
-                      items={categoryItem.tasks.map(task => task.id)}
-                      strategy={verticalListSortingStrategy}
-                    >
-                      {categoryItem.tasks.map((taskItem, taskIndex) => (
-                        <SortableTask
-                          key={taskItem.id}
-                          id={taskItem.id}
-                          text={taskItem.text}
-                          done={taskItem.done}
-                          onToggle={() => toogleTaskDone(categoryIndex, taskItem.id)}
-                          onDelete={() => deleteTask(categoryIndex, taskItem.id)}
-                        />
-                      ))}
-                    </SortableContext>
-                    <div className={styles.inputBtnContainer}>
-                      <div className={styles.inputBtn}>
-                        <span
-                          className={styles.inputToggleIcon}
-                          onClick={() => toggleTaskInput(categoryIndex)}
-                          tabIndex={0}
-                          role="button"
-                          aria-label="タスク入力欄の表示切替"
-                          style={{ marginTop: "0.5rem" }}
-                        >
-                          {showTaskInput[categoryIndex] ? "−" : "+"}
-                        </span>
-                      </div>
-                      <div>
-                        {showTaskInput[categoryIndex] && (
-                          <div className={styles.memoInputStyle}>
-                            <input
-                              className={styles.memoInput}
-                              placeholder="input task"
-                              value={taskInputs[categoryIndex] || ""}
-                              onChange={e => {
-                                const newInputs = [...taskInputs];
-                                newInputs[categoryIndex] = e.target.value;
-                                setTaskInputs(newInputs);
-                              }}
-                              onKeyDown={e =>
-                                e.key === "Enter" &&
-                                addTaskToCategory(categoryIndex, taskInputs[categoryIndex])
-                              }
-                            />
-                            <button
-                              className={styles.addBtn}
-                              onClick={() =>
-                                addTaskToCategory(categoryIndex, taskInputs[categoryIndex])
-                              }
-                            >
-                              add
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+              </div>            
+            {memos
+              .filter(cat => collapsedCategories.includes(cat.id))
+              .map(cat => (
+                <div
+                  key={cat.id}
+                  className={styles.sidebarCategory}
+                  onClick={() => toggleCategoryCollapse(cat.id)}
+                >
+                  {cat.category}
                 </div>
-              </SortableCategory>
-            ))}
-          </SortableContext>
-          <DragOverlay>
-            {activeTask ? (
-              <SortableTask
-                id={activeTask.id}
-                text={activeTask.text}
-                done={activeTask.done}
-              />
-            ) : null}
-          </DragOverlay>
-        </DndContext>
+              ))}
+          </div>
+        )}
+
+        {/* メイン */}
+        <div className={styles.category}>
+          <DndContext
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDragCancel={handleDragCancel}
+          >
+            <SortableContext
+              items={memos.map(cat => cat.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              {memos.map((categoryItem, categoryIndex) =>
+                !collapsedCategories.includes(categoryItem.id) && (
+                  <SortableCategory
+                    key={categoryItem.id}
+                    id={categoryItem.id}
+                    label={categoryItem.category}
+                  >
+                    <div className={styles.categoryContainer}>
+                      <div>
+                        <div className={styles.deleteBtn}>
+                          {/* 閉じるボタン */}
+                          <span
+                            className={styles.collapseBtn}
+                            onClick={() => toggleCategoryCollapse(categoryItem.id)}
+                            tabIndex={0}
+                            role="button"
+                            aria-label="カテゴリをたたむ"
+                          >
+                            ー
+                          </span>
+                          {/* xボタン */}
+                          <span
+                            className={styles.deleteIcon}
+                            onClick={() => {
+                              if (window.confirm("本当にこのカテゴリを削除しますか？")) {
+                                deleteMemo(categoryIndex);
+                              }
+                            }}
+                            tabIndex={0}
+                            role="button"
+                            aria-label="カテゴリ削除"
+                            onKeyDown={e =>
+                              (e.key === "Enter" || e.key === " ") &&
+                              window.confirm("本当にこのカテゴリを削除しますか？") &&
+                              deleteMemo(categoryIndex)
+                            }
+                          >
+                            ｘ
+                          </span>
+                        </div>
+                        <SortableContext
+                          items={categoryItem.tasks.map(task => task.id)}
+                          strategy={verticalListSortingStrategy}
+                        >
+                          {categoryItem.tasks.map((taskItem, taskIndex) => (
+                            <SortableTask
+                              key={taskItem.id}
+                              id={taskItem.id}
+                              text={taskItem.text}
+                              done={taskItem.done}
+                              onToggle={() => toogleTaskDone(categoryIndex, taskItem.id)}
+                              onDelete={() => deleteTask(categoryIndex, taskItem.id)}
+                            />
+                          ))}
+                        </SortableContext>
+                        <div className={styles.inputBtnContainer}>
+                          <div className={styles.inputBtn}>
+                            <span
+                              className={styles.inputToggleIcon}
+                              onClick={() => toggleTaskInput(categoryIndex)}
+                              tabIndex={0}
+                              role="button"
+                              aria-label="タスク入力欄の表示切替"
+                              style={{ marginTop: "0.5rem" }}
+                            >
+                              {showTaskInput[categoryIndex] ? "−" : "+"}
+                            </span>
+                          </div>
+                          <div>
+                            {showTaskInput[categoryIndex] && (
+                              <div className={styles.memoInputStyle}>
+                                <input
+                                  className={styles.memoInput}
+                                  placeholder="input task"
+                                  value={taskInputs[categoryIndex] || ""}
+                                  onChange={e => {
+                                    const newInputs = [...taskInputs];
+                                    newInputs[categoryIndex] = e.target.value;
+                                    setTaskInputs(newInputs);
+                                  }}
+                                  onKeyDown={e =>
+                                    e.key === "Enter" &&
+                                    addTaskToCategory(categoryIndex, taskInputs[categoryIndex])
+                                  }
+                                />
+                                <button
+                                  className={styles.addBtn}
+                                  onClick={() =>
+                                    addTaskToCategory(categoryIndex, taskInputs[categoryIndex])
+                                  }
+                                >
+                                  add
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </SortableCategory>
+                ))
+              }
+            </SortableContext>
+            <DragOverlay>
+              {activeTask ? (
+                <SortableTask
+                  id={activeTask.id}
+                  text={activeTask.text}
+                  done={activeTask.done}
+                />
+              ) : null}
+            </DragOverlay>
+          </DndContext>
+        </div>
       </div>
     </div>
   );

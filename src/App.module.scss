@@ -67,7 +67,12 @@
 
 // 以降、色指定をすべて変数で統一
 
-.categoryInput,
+.categoryInput{
+  color: var(--input-text);
+  width: 500px;
+}
+
+
 .memoInput {
   color: var(--input-text);
 }
@@ -403,13 +408,9 @@ html {
 
   .categoryInputStyle {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     min-height: 32px; // 48px → 32px で入力欄の高さを狭く
-  }
-  .changeCategory {
-    display: flex;
-    width: 300px;
   }
 
   .inputToggleIcon {
@@ -513,5 +514,31 @@ html {
   .taskItem.done {
     background: var(--task-done-bg) !important;
     opacity: 0.5;
+  }
+
+  .sidebar {
+    width: 260px;
+    background: var(--main-bg);
+    padding: 1rem 0;
+    margin-right: 2rem;
+  }
+  .sidebarCategory {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    color: var(--main-color);
+    &:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+  }
+  .collapseBtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // 縦方向中央
+    align-items: center; 
+    margin-right: 0.4em;
+    cursor: pointer;
+    font-size: small;
   }
 }
