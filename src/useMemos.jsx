@@ -11,6 +11,7 @@ export function useMemos() {
   });
 
   const [activeTask, setActiveTask] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   // localStorageから復元
   useEffect(() => {
@@ -79,16 +80,26 @@ export function useMemos() {
   // DnD Kit用
   const handleDragStart = (event) => {
     const { active } = event;
+    // タスク
     const task = memos
       .flatMap(cat => cat.tasks)
       .find(task => task.id === active.id);
     setActiveTask(task);
+
+    // カテゴリ
+    const category = memos.find(cat => cat.id === active.id);
+    if (category) {
+      setActiveCategory({ id: category.id, label: category.category });
+    } else {
+      setActiveCategory(null);
+    }
   };
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (!over || active.id === over.id) {
       setTimeout(() => setActiveTask(null), 0);
+      setTimeout(() => setActiveCategory(null), 0);
       return;
     }
 
@@ -166,7 +177,10 @@ export function useMemos() {
     setActiveTask(null);
   };
 
-  const handleDragCancel = () => setActiveTask(null);
+  const handleDragCancel = () => {
+    setActiveTask(null);
+    setActiveCategory(null);
+  };
 
   // カテゴリごとのタスクinput表示状態
   const [showTaskInput, setShowTaskInput] = useState({});
@@ -217,6 +231,8 @@ export function useMemos() {
     setIsAltColor,
     activeTask,
     setActiveTask,
+    activeCategory,
+    setActiveCategory,
     handleDragStart,
     handleDragEnd,
     handleDragCancel,

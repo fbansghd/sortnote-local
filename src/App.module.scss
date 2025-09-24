@@ -29,6 +29,10 @@
   --task-bg: #68afdf;
   --task-done-color: #727272;
   --task-done-bg: #b8d5ee; // お好みで薄い青系
+  --categroy-handle: #ddeefc;
+  --category-border: #2b5674ff;
+  --category-border-overlay: #2b5674ff;
+  --category-bg: #ddd9a4 ;
 }
 
 // テーマB
@@ -62,6 +66,9 @@
   --task-bg: #FFE2E2;
   --task-done-color: #bbbaba;
   --task-done-bg: #fdefef; // お好みで薄いピンク系
+  --category-border: #b3a6a6;
+  --category-border-overlay: #b3a6a6;
+  --category-bg: #fcf0ca ;
 }
 
 // 以降、色指定をすべて変数で統一
@@ -135,7 +142,9 @@ html {
   max-width: 100rem;
   width: 100%;
 
-  .header {}
+  .header {
+    margin-left:1rem;
+  }
 
   .headerContainer {
     display: flex;
@@ -176,21 +185,18 @@ html {
 
   .category {
     display: flex;
+    margin-left: 1rem;
 
     .sortableCategory {
       background-color: var(--main-bg);
       margin-right: 0.6rem;
-      border-bottom-left-radius: 15px;
-      border-bottom-right-radius: 15px;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      border: 3px solid var(--accent); // ← border-colorだけでなくborder幅も指定
+      // border: 3px solid var(--accent);
 
       .categoryHandle {
         color:var(--categroy-handle);
         background-color: var(--accent); // ← ここを修正
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -209,8 +215,8 @@ html {
         min-width: 0;
         background-color: var(--main-bg);
         max-width: 100rem;
-        border-radius: 5%;
-        min-height: 200px;
+        border-radius: 15px;
+        min-height: 100px;
 
         .deleteBtn {
           display: flex;
@@ -545,7 +551,6 @@ html {
   .sidebar {
     width: 260px;
     background: var(--main-bg);
-    padding: 1rem 0;
     margin-right: 2rem;
   }
   .sidebarCategory {
@@ -567,4 +572,11 @@ html {
     cursor: pointer;
     font-size: small;
   }
+}
+
+.dragging {
+}
+
+.body {
+  display: flex;
 }

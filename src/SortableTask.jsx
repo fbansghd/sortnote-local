@@ -17,7 +17,7 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay }) {
       }
       animate={
         isOverlay
-          ? { opacity: 1, scale: 1.04, y: 0, boxShadow: "0 8px 24px #3282B888, 0 0 0 2px #3282B8" }
+          ? { opacity: 1, scale: 1.1, y: 0, boxShadow: "0 8px 24px #3282B888, 0 0 0 2px #3282B8",background: "#68afdf", }
           : { opacity: 1, scale: 1, y: 0, boxShadow: "none" }
       }
       exit={
@@ -28,6 +28,8 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay }) {
       transition={{ duration: 0.18 }}
       className={`${styles.taskItem} ${done ? styles.done : ""} ${isDragging ? styles.dragging : ""}`}
       style={{
+        minHeight: isOverlay ? 40 : 40, // ← ここで直接指定
+        borderRadius: isOverlay ? "4px" : "4px", 
         transform: CSS.Transform.toString(transform),
         transition: transition || "transform 200ms cubic-bezier(0.2, 0, 0, 1)",
         zIndex: isOverlay ? 100 : undefined,
@@ -44,30 +46,28 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay }) {
       >
         {text}
       </span>
-      <span className={styles.taskIcons}>
-        {!isOverlay && (
-          <>
-            <span
-              className={styles.doneIcon}
-              onClick={onToggle}
-              tabIndex={0}
-              role="button"
-              aria-label="タスク完了切替"
-            >
-              ✓
-            </span>
-            <span
-              className={styles.deleteIcon}
-              onClick={() => onDelete(id)}
-              tabIndex={0}
-              role="button"
-              aria-label="タスク削除"
-            >
-              ×
-            </span>
-          </>
-        )}
-      </span>
+      {!isOverlay && (
+        <span className={styles.taskIcons}>
+          <span
+            className={styles.doneIcon}
+            onClick={onToggle}
+            tabIndex={0}
+            role="button"
+            aria-label="タスク完了切替"
+          >
+            ✓
+          </span>
+          <span
+            className={styles.deleteIcon}
+            onClick={() => onDelete(id)}
+            tabIndex={0}
+            role="button"
+            aria-label="タスク削除"
+          >
+            ×
+          </span>
+        </span>
+      )}
     </motion.div>
   );
 }

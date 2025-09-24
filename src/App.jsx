@@ -23,6 +23,7 @@ function App() {
     isAltColor,
     setIsAltColor,
     activeTask,
+    activeCategory,
     handleDragStart,
     handleDragEnd,
     handleDragCancel,
@@ -85,7 +86,7 @@ function App() {
         </div>
       </div>
       <br />
-      <div style={{ display: "flex" }}>
+      <div className={styles.body}>
         {/* サイドバー */}
         {showSidebar && (
           <div className={styles.sidebar}>
@@ -239,6 +240,17 @@ function App() {
                   id={activeTask.id}
                   text={activeTask.text}
                   done={activeTask.done}
+                  onToggle={() => {}}
+                  onDelete={() => {}}
+                  isOverlay={true}
+                  // transform={activeTask.transform} ←DnD Kitからtransformを取得して渡す
+                />
+              ) : activeCategory ? (
+                <SortableCategory
+                  id={activeCategory.id}
+                  label={activeCategory.label}
+                  isOverlay={true}
+                  // transform={activeCategory.transform} ←DnD Kitからtransformを取得して渡す
                 />
               ) : null}
             </DragOverlay>
