@@ -1,4 +1,4 @@
-import { DndContext, DragOverlay, pointerWithin } from "@dnd-kit/core";
+import { DndContext, DragOverlay, pointerWithin, TouchSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useEffect, useState } from "react";
 import styles from "./App.module.scss";
@@ -89,6 +89,11 @@ function App() {
     document.body.classList.add(isAltColor ? styles.themeB : styles.themeA);
   }, [isAltColor]);
 
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor)
+  );
+
   return (
     <div className={`${isAltColor ? styles.themeB : styles.themeA} ${styles.container}`}>
       <div className={styles.header}>
@@ -168,6 +173,7 @@ function App() {
           )}
           <div className={styles.category}>
             <DndContext
+              sensors={sensors}
               collisionDetection={pointerWithin}
               onDragStart={handleDragStart}
               onDragEnd={handleDragEnd}
@@ -261,22 +267,30 @@ function App() {
                                     <input
                                       className={styles.memoInput}
                                       placeholder="input task"
-                                      value={taskInputs[categoryIndex] || ""}
+                                      value={
+                                        isMobile
+                                          ? taskInputs[mobileCategoryIndex] || ""
+                                          : taskInputs[categoryIndex] || ""
+                                      }
                                       onChange={e => {
+                                        const idx = isMobile ? mobileCategoryIndex : categoryIndex;
                                         const newInputs = [...taskInputs];
-                                        newInputs[categoryIndex] = e.target.value;
+                                        newInputs[idx] = e.target.value;
                                         setTaskInputs(newInputs);
                                       }}
-                                      onKeyDown={e =>
-                                        e.key === "Enter" &&
-                                        addTaskToCategory(categoryIndex, taskInputs[categoryIndex])
-                                      }
+                                      onKeyDown={e => {
+                                        if (e.key === "Enter") {
+                                          const idx = isMobile ? mobileCategoryIndex : categoryIndex;
+                                          addTaskToCategory(idx, taskInputs[idx]);
+                                        }
+                                      }}
                                     />
                                     <button
                                       className={styles.addBtn}
-                                      onClick={() =>
-                                        addTaskToCategory(categoryIndex, taskInputs[categoryIndex])
-                                      }
+                                      onClick={() => {
+                                        const idx = isMobile ? mobileCategoryIndex : categoryIndex;
+                                        addTaskToCategory(idx, taskInputs[idx]);
+                                      }}
                                     >
                                       add
                                     </button>
