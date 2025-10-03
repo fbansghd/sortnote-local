@@ -3,10 +3,13 @@ import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
 import styles from "./App.module.scss";
 
-function SortableTask({ id, text, done, onToggle, onDelete, isOverlay, isParentOverlay  }) {
+// ドラッグ＆ドロップ可能なタスクコンポーネント
+function SortableTask({ id, text, done, onToggle, onDelete, isOverlay, isParentOverlay }) {
+  // DnD KitのuseSortableフックでドラッグ状態や属性を取得
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
   return (
+    // motion.divでアニメーション付きのタスク枠を表示
     <motion.div
       ref={setNodeRef}
       layout
@@ -30,7 +33,7 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay, isParentO
       transition={{ duration: 0.18 }}
       className={`${styles.taskItem} ${done ? styles.done : ""} ${isDragging ? styles.dragging : ""} ${isParentOverlay ? styles.isParentOverlay : ""}`}
       style={{
-        minHeight: isOverlay ? 40 : 40, // ← ここで直接指定
+        minHeight: isOverlay ? 40 : 40, // タスクの高さ
         borderRadius: isOverlay ? "4px" : "4px", 
         transform: CSS.Transform.toString(transform),
         transition: transition || "transform 200ms cubic-bezier(0.2, 0, 0, 1)",
@@ -38,8 +41,9 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay, isParentO
         pointerEvents: isOverlay ? "none" : undefined,
       }}
       {...attributes}
-      // listenersはここでは付与しない
+      // listenersはここでは付与しない（ドラッグハンドルにのみ付与）
     >
+      {/* タスクテキスト（ドラッグハンドル） */}
       <span
         className={`${done ? styles.done : ""} ${styles.grab} ${styles.taskText}`}
         // ドラッグハンドルとしてlistenersをここに付与
@@ -48,8 +52,10 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay, isParentO
       >
         {text}
       </span>
+      {/* オーバーレイ表示時はアイコン非表示 */}
       {!isOverlay && (
         <span className={styles.taskIcons}>
+          {/* タスク完了切り替えアイコン */}
           <span
             className={styles.doneIcon}
             onClick={onToggle}
@@ -59,6 +65,7 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay, isParentO
           >
             ✓
           </span>
+          {/* タスク削除アイコン */}
           <span
             className={styles.deleteIcon}
             onClick={() => onDelete(id)}

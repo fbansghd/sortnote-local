@@ -7,6 +7,7 @@ import SortableCategory from "./SortableCategory";
 import React from "react";
 
 function App() {
+  // カスタムフックから全ての状態・操作関数を取得
   const {
     text,
     setText,
@@ -37,23 +38,26 @@ function App() {
     handleNextCategory,
   } = useMemos();
 
-  // DnD Kit sensors
+  // DnD Kitのセンサー設定（マウス・タッチ対応）
   const sensors = useSensors(
     useSensor(MouseSensor),
     useSensor(TouchSensor)
   );
 
-  // テーマ切り替え
+  // テーマ切り替え（bodyのクラスを変更）
   React.useEffect(() => {
     document.body.classList.remove(styles.themeA, styles.themeB);
     document.body.classList.add(isAltColor ? styles.themeB : styles.themeA);
   }, [isAltColor]);
 
   return (
+    // テーマとレイアウトのコンテナ
     <div className={`${isAltColor ? styles.themeB : styles.themeA} ${styles.container}`}>
+      {/* ヘッダー部 */}
       <div className={styles.header}>
         <div className={styles.title}>Todo List</div>
         <div className={styles.headerContainer}>
+          {/* テーマ切り替えトグル */}
           <div className={styles.toggleContainer}>
             <div>Theme Color</div>
             <label className={styles.toggleSwitch}>
@@ -65,6 +69,7 @@ function App() {
               <span className={styles.slider}></span>
             </label>
           </div>
+          {/* サイドバー表示トグル */}
           <div className={styles.toggleContainer}>
             <div>Sidebar</div>
             <label className={styles.toggleSwitch}>
@@ -80,7 +85,7 @@ function App() {
       </div>
       <br />
       <div className={styles.body}>
-        {/* サイドバー */}
+        {/* サイドバー（折り畳み中カテゴリー一覧と追加UI） */}
         {showSidebar && (
           <div className={styles.sidebar}>
             <div className={styles.categoryInputStyle}>
@@ -98,6 +103,7 @@ function App() {
                 add
               </button>
             </div>
+            {/* 折り畳み中カテゴリーの一覧表示 */}
             {memos
               .filter(cat => collapsedCategories.includes(cat.id))
               .map(cat => (
@@ -112,9 +118,9 @@ function App() {
           </div>
         )}
 
-        {/* メイン */}
+        {/* メイン画面（カテゴリー・タスク一覧） */}
         <div className={styles.mainContainer}>
-          {/* モバイル時だけカテゴリー切り替えボタン */}
+          {/* モバイル時のみカテゴリー切り替えボタン（左） */}
           {isMobile && memos.length > 1 && !showSidebar && (
             <div className={styles.categorySwitchArrows}>
               <button
@@ -127,6 +133,7 @@ function App() {
             </div>
           )}
           <div className={styles.category}>
+            {/* DnD Kitのドラッグ＆ドロップコンテキスト */}
             <DndContext
               sensors={sensors}
               collisionDetection={pointerWithin}
@@ -134,10 +141,12 @@ function App() {
               onDragEnd={handleDragEnd}
               onDragCancel={handleDragCancel}
             >
+              {/* カテゴリーの並び替えコンテキスト */}
               <SortableContext
                 items={memos.map(cat => cat.id)}
                 strategy={verticalListSortingStrategy}
               >
+                {/* 折り畳み中以外のカテゴリーを表示 */}
                 {memos
                   .filter((_, idx) =>
                     !isMobile
@@ -159,10 +168,12 @@ function App() {
                       >
                         <div className={styles.categoryContainer}>
                           <div>
+                            {/* タスクの並び替えコンテキスト */}
                             <SortableContext
                               items={categoryItem.tasks.map(task => task.id)}
                               strategy={verticalListSortingStrategy}
                             >
+                              {/* タスク一覧表示（未完了→完了順） */}
                               {categoryItem.tasks
                                 .slice()
                                 .sort((a, b) => a.done - b.done)
@@ -177,6 +188,7 @@ function App() {
                                   />
                                 ))}
                             </SortableContext>
+                            {/* タスク追加UI */}
                             <div className={styles.inputBtnContainer}>
                               <div className={styles.inputBtn}>
                                 <span
@@ -202,6 +214,7 @@ function App() {
                                           : taskInputs[categoryIndex] || ""
                                       }
                                       onChange={e => {
+                                        // モバイル時はmobileCategoryIndex、PC時はcategoryIndexで入力値を管理
                                         const idx = isMobile ? mobileCategoryIndex : categoryIndex;
                                         const newInputs = [...taskInputs];
                                         newInputs[idx] = e.target.value;
@@ -233,6 +246,7 @@ function App() {
                     ))
                 }
               </SortableContext>
+              {/* ドラッグ中のオーバーレイ表示（ドラッグ状態に依存） */}
               <DragOverlay>
                 {activeTask ? (
                   <SortableTask
@@ -249,9 +263,7 @@ function App() {
                     label={activeCategory.label}
                     isOverlay={true}
                   >
-                    <div
-                      className={`${styles.categoryContainer} ${styles.categoryContainerOverlay}`}
-                    >
+                    <div className={`${styles.categoryContainer} ${styles.categoryContainerOverlay}`}>
                       {activeCategory.tasks?.map((taskItem) => (
                         <SortableTask
                           key={taskItem.id}
@@ -269,6 +281,7 @@ function App() {
               </DragOverlay>
             </DndContext>
           </div>
+          {/* モバイル時のみカテゴリー切り替えボタン（右） */}
           {isMobile && memos.length > 1 && !showSidebar && (
             <div className={styles.categorySwitchArrows}>
               <button
