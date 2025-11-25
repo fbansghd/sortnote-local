@@ -71,7 +71,7 @@ function App() {
           </div>
           {/* サイドバー表示トグル */}
           <div className={styles.toggleContainer}>
-            <div>MemoBox</div>
+            <div>Sidebar</div>
             <label className={styles.toggleSwitch}>
               <input
                 type="checkbox"
