@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(copy \"%USERPROFILE%.configclaude\\config.json\" \"%USERPROFILE%\\.config\\claude\\config.json\")",
+      "Bash(cp:*)",
+      "Bash(npm start)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

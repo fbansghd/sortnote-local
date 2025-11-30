@@ -1,3 +1,7 @@
+// ============================================
+// テーマ変数
+// ============================================
+
 // テーマA
 .themeA {
   --accent: #3282B8;
@@ -32,8 +36,8 @@
   --categroy-handle: #ddeefc;
   --category-border: #2b5674ff;
   --category-border-overlay: #2b5674ff;
-  --category-bg: #ddd9a4 ;
-  --collaspe-btn:#0F4C75;
+  --category-bg: #ddd9a4;
+  --collaspe-btn: #0F4C75;
 }
 
 // テーマB
@@ -69,11 +73,14 @@
   --task-done-bg: #fdefef;
   --category-border: #b3a6a6;
   --category-border-overlay: #b3a6a6;
-  --category-bg: #fcf0ca ;
-   --collaspe-btn:#393e465;
+  --category-bg: #fcf0ca;
+  --collaspe-btn: #393e465;
 }
 
-// html, body
+// ============================================
+// グローバルスタイル
+// ============================================
+
 html {
   background: var(--main-bg);
   color: var(--main-color);
@@ -82,11 +89,25 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
   body {
     margin: 3rem;
     background: var(--main-bg);
     color: var(--main-color);
   }
+}
+
+// ============================================
+// レイアウト
+// ============================================
+
+.body {
+  display: flex;
+}
+
+.mainContainer {
+  display: flex;
+  align-items: flex-start;
 }
 
 .container {
@@ -96,448 +117,157 @@ html {
   flex-direction: column;
   max-width: 100rem;
   width: 100%;
-
-  .header {
-    margin-left:1rem;
-  }
-
-  .headerContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-family: 'Ink Free', cursive, sans-serif;
-    font-weight: 600;
-  }
-
-  .title {
-    font-weight: 800;
-    font-size: 2.5rem;
-    font-family: 'Ink Free', cursive, sans-serif;
-  }
-
-  .deleteBtn {
-    display: flex;
-    justify-content: flex-end;
-    .deleteIcon {
-      cursor: pointer;
-      transition: color 0.2s, transform 0.2s;
-      &:hover,
-      &:focus {
-        color: var(--delete-icon-hover);
-        transform: scale(1.15);
-        outline: none;
-      }
-    }
-  }
-
-  .addCategory {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .category {
-    display: flex;
-    align-items: flex-start;
-    margin-left: 1rem;
-
-    .sortableCategory {
-      background-color: var(--main-bg);
-      margin-right: 0.6rem;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-
-      .categoryHandle {
-        color: var(--categroy-handle);
-        background-color: var(--accent);
-        border-top-left-radius: 14px;
-        border-top-right-radius: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5em 1em;
-        margin-bottom: 1.5em;
-
-        .handleLabel {
-          flex: 1;
-          margin-right: 1.5em;
-        }
-
-        .collapseBtn {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          margin-right: 0.7em;
-          cursor: pointer;
-          font-size: 1.3rem;
-          color: var(--collaspe-btn);
-        }
-
-        .deleteIcon {
-          margin-left: 0;
-          cursor: pointer;
-          font-size: 1.3rem;
-          color: var(--delete-icon-color);
-          transition: color 0.2s, transform 0.2s;
-          &:hover,
-          &:focus {
-            color: var(--delete-icon-hover);
-            transform: scale(1.15);
-            outline: none;
-          }
-        }
-      }
-
-      .categoryContainer {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 320px;
-        min-width: 0;
-        background-color: var(--main-bg);
-        max-width: 100rem;
-        border-radius: 15px;
-        min-height: 100px;
-        height: auto;
-        min-height: 0;
-        max-height: none;
-        box-sizing: border-box;
-        overflow: visible;
-
-        .deleteBtn {
-          display: flex;
-          justify-content: flex-end;
-          font-weight: 500;
-          color: var(--delete-icon-color);
-          margin-right:0.5rem;
-        }
-
-        .taskItem {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          background: var(--task-bg);
-          margin-bottom: 2px;
-          margin-left: 0.5rem;
-          padding: 6px;
-          border-radius: 4px;
-          width: 19rem;
-          min-height: 40px;
-          box-sizing: border-box;
-          transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
-          word-break: break-all;
-
-          .taskText {
-            flex: 1 1 0;
-            min-width: 0;
-            overflow-wrap: break-word;
-            word-break: break-all;
-            padding-right: 0.5em;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: normal;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-          }
-          .taskText::-webkit-scrollbar {
-            display: none;
-          }
-
-          .taskIcons {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            flex-shrink: 0;
-            margin-left: 0.7rem;
-          }
-
-          .done {
-            text-decoration: line-through;
-            color: var(--task-done-color);
-            transition: background 1s, color 1s;
-            opacity: 0.5;
-          }
-
-          .grab {
-            cursor: grab;
-          }
-
-          .doneIcon {
-            display: inline-block;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--done-icon-color);
-            cursor: pointer;
-            user-select: none;
-            margin-right: 0.3rem;
-            transition: color 0.2s, transform 0.2s;
-            &:hover,
-            &:focus {
-              color: var(--done-icon-hover);
-              transform: scale(1.15);
-              outline: none;
-            }
-          }
-
-          .deleteIcon {
-            display: inline-block;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--delete-icon-color);
-            cursor: pointer;
-            user-select: none;
-            transition: color 0.2s, transform 0.2s;
-            &:hover,
-            &:focus {
-              color: var(--delete-icon-hover);
-              transform: scale(1.15);
-              outline: none;
-            }
-          }
-
-          span > .doneIcon,
-          span > .deleteIcon {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-          }
-
-          &:hover span > .doneIcon,
-          &:hover span > .deleteIcon,
-          &:focus-within span > .doneIcon,
-          &:focus-within span > .deleteIcon {
-            opacity: 1;
-            pointer-events: auto;
-          }
-
-          .taskText {
-            flex: 1 1 0;
-            min-width: 0;
-            overflow: auto;
-            word-break: break-all;
-          }
-        }
-      }
-    }
-  }
-
-  .inputBtnContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    .inputBtn {
-      display: flex;
-      justify-content: center;
-    }
-  }
-
-  .categoryInput {
-    width: 100%;
-    width: 11rem;
-    height: 1.5rem;
-    margin-left: 0.7rem;
-    font-size: 1rem;
-    font-family: inherit;
-    background: var(--input-bg);
-    border: 1.5px solid var(--inputcolor);
-    border-radius: 7px;
-    box-shadow: 0 1px 4px var(--inputshadow);
-    outline: none;
-    box-shadow: 0 1px 4px var(--inputshadow);
-    transition: border 0.2s, box-shadow 0.2s;
-    &:focus {
-      border: 1.5px solid var(--input-border-focus);
-      box-shadow: 0 0 0 2px var(--input-shadow-focus);
-      background: var(--input-background-focus);
-    }
-  }
-
-  .toggleContainer {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    min-height: 2rem;
-  }
-
-  .toggleSwitch {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 22px;
-    input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: var(--input-toggle-bg);
-      border-radius: 22px;
-      transition: .4s;
-      &:before {
-        position: absolute;
-        content: "";
-        height: 18px;
-        width: 18px;
-        left: 2px;
-        bottom: 2px;
-        background-color: var(--input-toggle-knob);
-        border-radius: 50%;
-        transition: .4s;
-      }
-    }
-    input:checked + .slider {
-      background-color: var(--input-toggle-checked);
-    }
-    input:checked + .slider:before {
-      transform: translateX(18px);
-    }
-  }
-
-  .categoryInputStyle {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    min-height: 32px;
-  }
-
-  .inputToggleIcon {
-    display: inline-block;
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #0F4C75;
-    cursor: pointer;
-    user-select: none;
-    margin-left: 0.5rem;
-    transition: color 0.2s, transform 0.2s;
-    &:hover,
-    &:focus {
-      color: #0F4C75;
-      transform: scale(1.15);
-      outline: none;
-    }
-  }
-  .memoInputStyle{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .memoInput {
-    width: 100%;
-    width: 12rem;
-    height: 2.2rem;
-    padding: 0 1rem;
-    margin-left: 0.7rem;
-    margin-bottom: 0.7rem;
-    font-size: 1rem;
-    font-family: inherit;
-    background: var(--input-bg);
-    border: 1.5px solid var(--memoinput-border);
-    border-radius: 7px;
-    box-shadow: 0 1px 4px rgba(50,130,184,0.04);
-    outline: none;
-    box-shadow: 0 1px 4px var(--inputshadow);
-    transition: border 0.2s, box-shadow 0.2s;
-    text-align: left;
-    line-height: 2.2rem;
-    &:focus {
-      border: 1.5px solid var(--input-border-focus);
-      box-shadow: 0 0 0 2px var(--input-shadow-focus);
-      background: var(--input-background-focus);
-    }
-  }
-  .categoryAddBtn {
-    height: 1.7rem;
-    background: var(--btn-bg);
-    color: var(--btn-text);
-    border: none;
-    border-radius: 6px;
-    padding: 0.3em 0.3rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px var(--btn-shadow);
-    margin-left: 0.5rem;
-    &:hover,
-    &:focus {
-      background: var(--btn-hover);
-      outline: none;
-    }
-    &:active {
-      background: var(--btn-active);
-    }
-  }
-
-  .addBtn {
-    padding-bottom: 1rem;
-    height: 2.2rem;
-    background: var(--btn-bg);
-    color: var(--btn-text);
-    border: none;
-    border-radius: 6px;
-    padding: 0.5em 1em;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px var(--addbtn-shadow);
-    margin-left: 0.5rem;
-    margin-bottom: 0.7rem;
-    &:hover,
-    &:focus {
-      background: var(--btn-hover);
-      outline: none;
-    }
-    &:active {
-      background: var(--btn-active);
-    }
-  }
-
-  .taskItem.done {
-    background: var(--task-done-bg) !important;
-    opacity: 0.5;
-  }
-
-  .sidebar {
-    width: 260px;
-    background: var(--main-bg);
-    margin-right: 2rem;
-  }
-  .sidebarCategory {
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    color: var(--main-color);
-    &:hover {
-      background: var(--accent);
-      color: #fff;
-    }
-  }
 }
 
-.body {
+// ============================================
+// ヘッダー
+// ============================================
+
+.header {
+  margin-left: 1rem;
+}
+
+.headerContainer {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: 'Ink Free', cursive, sans-serif;
+  font-weight: 600;
 }
 
-.isParentOverlay{
-  background: #fffbe6;
-  opacity: 0.8;
-  margin-bottom: 2px !important;
-  padding: 0 !important;
+.title {
+  font-weight: 800;
+  font-size: 2.5rem;
+  font-family: 'Ink Free', cursive, sans-serif;
 }
 
+// ============================================
+// サイドバー
+// ============================================
+
+.sidebar {
+  width: 260px;
+  background: var(--main-bg);
+  margin-right: 2rem;
+}
+
+.sidebarCategory {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: var(--main-color);
+
+  &:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+}
+
+// ============================================
+// カテゴリセクション
+// ============================================
+
+.addCategory {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.category {
+  display: flex;
+  align-items: flex-start;
+  margin-left: 1rem;
+}
+
+// カテゴリ（ドラッグ可能）
+.sortableCategory {
+  background-color: var(--main-bg);
+  margin-right: 0.6rem;
+  margin-bottom: 16px;
+  min-height: 100px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  border: 3px solid var(--category-border);
+
+  &.overlay {
+    z-index: 10;
+    border-color: var(--category-border-overlay);
+    background: var(--category-bg);
+    box-shadow: 0 8px 24px #3282B888, 0 0 0 2px #3282B8;
+    pointer-events: none;
+  }
+
+  &.dragging {
+    z-index: 10;
+  }
+}
+
+// カテゴリハンドル
+.categoryHandle {
+  color: var(--categroy-handle);
+  background-color: var(--accent);
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 1em;
+  margin-bottom: 1.5em;
+  cursor: grab;
+  user-select: none;
+  position: relative;
+}
+
+.handleLabel {
+  flex: 1;
+  margin-right: 1.5em;
+  min-width: 0;
+  padding-right: 2.5em;
+  cursor: grab;
+  display: block;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  z-index: 3;
+}
+
+.collapseBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.7em;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: var(--collaspe-btn);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+// カテゴリコンテナ
+.categoryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 320px;
+  min-width: 0;
+  background-color: var(--main-bg);
+  max-width: 100rem;
+  border-radius: 15px;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+// オーバーレイ時のカテゴリコンテナ
 .categoryContainerOverlay {
   margin-bottom: 1px !important;
   margin-top: 2px !important;
@@ -545,56 +275,361 @@ html {
   transform: scaleX(0.93) scaleY(0.90);
   border-radius: 1px !important;
   background: var(--category-bg) !important;
+
   .taskItem {
     margin-bottom: 2px !important;
     padding: 0 !important;
   }
 }
 
-@media (max-width: 600px) {
-  .container {
-    width: 100vw;
-    min-width: 0;
-    padding: 0 4vw;
+// ============================================
+// タスクアイテム
+// ============================================
+
+.taskItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--task-bg);
+  margin-bottom: 2px;
+  margin-left: 0.5rem;
+  padding: 6px;
+  border-radius: 4px;
+  width: 19rem;
+  min-height: 40px;
+  box-sizing: border-box;
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  word-break: break-all;
+
+  &.done {
+    background: var(--task-done-bg);
+    opacity: 0.5;
   }
-  .categoryContainer,
-  .categoryContainerOverlay {
-    width: 100%;
-    min-width: 0;
-    max-width: 100vw;
-    border-radius: 10px;
-    font-size: 1rem;
-    padding: 0.5rem;
+
+  &.overlay {
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 8px 24px var(--category-border), 0 0 0 2px var(--category-border);
+    background: var(--task-bg);
   }
-  .taskItem {
-    font-size: 1rem;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+
+  &.isParentOverlay {
+    background: #b89d19ff;
   }
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  .sidebar {
-    width: 100%;
-    min-width: 0;
-    font-size: 1rem;
-  }
-  .memoInput,
-  .categoryInput {
-    font-size: 1rem;
-    width: 100%;
-  }
-  .addBtn,
-  .categoryAddBtn {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-  .category .sortableCategory:not(:first-child) {
-    display: none !important;
+
+  &:hover,
+  &:focus-within {
+    span > .doneIcon,
+    span > .deleteIcon {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 }
+
+.taskText {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  padding-right: 0.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  user-select: none;
+  cursor: grab;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.done {
+    text-decoration: line-through;
+    color: var(--task-done-color);
+    transition: background 1s, color 1s;
+    opacity: 0.5;
+  }
+
+  &.overlay {
+    cursor: default;
+  }
+}
+
+.taskIcons {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+  margin-left: 0.7rem;
+
+  > .doneIcon,
+  > .deleteIcon {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+}
+
+.grab {
+  cursor: grab;
+}
+
+// ============================================
+// アイコンボタン
+// ============================================
+
+.doneIcon {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--done-icon-color);
+  cursor: pointer;
+  user-select: none;
+  margin-right: 0.3rem;
+  transition: color 0.2s, transform 0.2s;
+
+  &:hover,
+  &:focus {
+    color: var(--done-icon-hover);
+    transform: scale(1.15);
+    outline: none;
+  }
+}
+
+.deleteIcon {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--delete-icon-color);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s, transform 0.2s;
+
+  &:hover,
+  &:focus {
+    color: var(--delete-icon-hover);
+    transform: scale(1.15);
+    outline: none;
+  }
+}
+
+.deleteBtn {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 500;
+  color: var(--delete-icon-color);
+  margin-right: 0.5rem;
+}
+
+// ============================================
+// フォーム入力
+// ============================================
+
+.inputBtnContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.inputBtn {
+  display: flex;
+  justify-content: center;
+}
+
+.categoryInputStyle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 32px;
+}
+
+.memoInputStyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.categoryInput {
+  width: 11rem;
+  height: 1.5rem;
+  margin-left: 0.7rem;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--input-bg);
+  border: 1.5px solid var(--inputcolor);
+  border-radius: 7px;
+  box-shadow: 0 1px 4px var(--inputshadow);
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    border: 1.5px solid var(--input-border-focus);
+    box-shadow: 0 0 0 2px var(--input-shadow-focus);
+    background: var(--input-background-focus);
+  }
+}
+
+.memoInput {
+  width: 12rem;
+  height: 2.2rem;
+  padding: 0 1rem;
+  margin-left: 0.7rem;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--input-bg);
+  border: 1.5px solid var(--memoinput-border);
+  border-radius: 7px;
+  box-shadow: 0 1px 4px var(--inputshadow);
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  text-align: left;
+  line-height: 2.2rem;
+
+  &:focus {
+    border: 1.5px solid var(--input-border-focus);
+    box-shadow: 0 0 0 2px var(--input-shadow-focus);
+    background: var(--input-background-focus);
+  }
+}
+
+// ============================================
+// トグルスイッチ
+// ============================================
+
+.toggleContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 2rem;
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .slider {
+      background-color: var(--input-toggle-checked);
+
+      &:before {
+        transform: translateX(18px);
+      }
+    }
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--input-toggle-bg);
+    border-radius: 22px;
+    transition: .4s;
+
+    &:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: var(--input-toggle-knob);
+      border-radius: 50%;
+      transition: .4s;
+    }
+  }
+}
+
+.inputToggleIcon {
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #0F4C75;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 0.5rem;
+  transition: color 0.2s, transform 0.2s;
+
+  &:hover,
+  &:focus {
+    color: #0F4C75;
+    transform: scale(1.15);
+    outline: none;
+  }
+}
+
+// ============================================
+// ボタン
+// ============================================
+
+.categoryAddBtn {
+  height: 1.7rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  padding: 0.3em 0.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px var(--btn-shadow);
+  margin-left: 0.5rem;
+
+  &:hover,
+  &:focus {
+    background: var(--btn-hover);
+    outline: none;
+  }
+
+  &:active {
+    background: var(--btn-active);
+  }
+}
+
+.addBtn {
+  height: 2.2rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 4px var(--addbtn-shadow);
+  margin-left: 0.5rem;
+  margin-bottom: 0.7rem;
+
+  &:hover,
+  &:focus {
+    background: var(--btn-hover);
+    outline: none;
+  }
+
+  &:active {
+    background: var(--btn-active);
+  }
+}
+
+// ============================================
+// モバイル用カテゴリナビゲーション
+// ============================================
 
 .categorySwitchArrows {
   display: flex;
@@ -623,21 +658,69 @@ html {
   margin: 0 1rem;
 }
 
-.mainContainer {
-  display: flex;
-  align-items: flex-start;
+// ============================================
+// ユーティリティ
+// ============================================
+
+.isParentOverlay {
+  background: #fffbe6;
+  opacity: 0.8;
+  margin-bottom: 2px !important;
+  padding: 0 !important;
 }
 
-.categoryContainer {
-  height: auto;
-  min-height: 0;
-  max-height: none;
-  box-sizing: border-box;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-}
+// ============================================
+// レスポンシブデザイン
+// ============================================
 
-.dragging{
-  
+@media (max-width: 600px) {
+  .container {
+    width: 100vw;
+    min-width: 0;
+    padding: 0 4vw;
+  }
+
+  .categoryContainer,
+  .categoryContainerOverlay {
+    width: 100%;
+    min-width: 0;
+    max-width: 100vw;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .taskItem {
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: 0;
+    font-size: 1rem;
+  }
+
+  .memoInput,
+  .categoryInput {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .addBtn,
+  .categoryAddBtn {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .category .sortableCategory:not(:first-child) {
+    display: none !important;
+  }
 }

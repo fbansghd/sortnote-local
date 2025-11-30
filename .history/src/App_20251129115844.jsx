@@ -18,31 +18,32 @@ function App() {
   const {
     text,
     setText,
-    categories,
-    setCategories,
+    memos,
+    setMemos,
     addCategory,
     deleteCategory,
     toggleCategoryCollapse,
-    isSidebarVisible,
-    setIsSidebarVisible,
+    showSidebar,
+    setShowSidebar,
   } = useCategoryManagement();
 
   const {
     taskInputs,
-    isTaskInputVisible,
-    handleToggleTaskInput,
+    showTaskInput,
+    toggleTaskInput,
+
     toggleTaskDone,
     deleteTask,
     handleTaskInputChange,
     handleTaskKeyDown,
     handleTaskAddClick,
-  } = useTaskManagement(categories, setCategories);
+  } = useTaskManagement(memos, setMemos);
 
   const { activeTask, activeCategory, handleDragStart, handleDragEnd, handleDragCancel } =
-    useDragAndDrop(categories, setCategories);
+    useDragAndDrop(memos, setMemos);
 
   const { isMobile, mobileCategoryIndex, handlePrevCategory, handleNextCategory } = useMobileView(
-    categories
+    memos
   );
 
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
@@ -52,23 +53,23 @@ function App() {
       <Header
         isAltColor={isAltColor}
         setIsAltColor={setIsAltColor}
-        isSidebarVisible={isSidebarVisible}
-        setIsSidebarVisible={setIsSidebarVisible}
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
       />
       <br />
       <div className={styles.body}>
-        {isSidebarVisible && (
+        {showSidebar && (
           <Sidebar
             text={text}
             setText={setText}
             addCategory={addCategory}
-            categories={categories}
+            memos={memos}
             toggleCategoryCollapse={toggleCategoryCollapse}
           />
         )}
 
         <div className={styles.mainContainer}>
-          {isMobile && categories.length > 1 && !isSidebarVisible && (
+          {isMobile && memos.length > 1 && !showSidebar && (
             <MobileNavigation direction="prev" onClick={handlePrevCategory} />
           )}
 
@@ -81,16 +82,16 @@ function App() {
               onDragCancel={handleDragCancel}
             >
               <CategoryList
-                categories={categories}
+                memos={memos}
                 isMobile={isMobile}
                 mobileCategoryIndex={mobileCategoryIndex}
-                isSidebarVisible={isSidebarVisible}
+                showSidebar={showSidebar}
                 deleteCategory={deleteCategory}
                 toggleCategoryCollapse={toggleCategoryCollapse}
                 toggleTaskDone={toggleTaskDone}
                 deleteTask={deleteTask}
-                isTaskInputVisible={isTaskInputVisible}
-                handleToggleTaskInput={handleToggleTaskInput}
+                showTaskInput={showTaskInput}
+                toggleTaskInput={toggleTaskInput}
                 taskInputs={taskInputs}
                 handleTaskInputChange={handleTaskInputChange}
                 handleTaskKeyDown={handleTaskKeyDown}
@@ -132,7 +133,7 @@ function App() {
             </DndContext>
           </div>
 
-          {isMobile && categories.length > 1 && !isSidebarVisible && (
+          {isMobile && memos.length > 1 && !showSidebar && (
             <MobileNavigation direction="next" onClick={handleNextCategory} />
           )}
         </div>
