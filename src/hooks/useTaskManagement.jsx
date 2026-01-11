@@ -55,8 +55,8 @@ export function useTaskManagement(categories, setCategories) {
     });
   };
 
-  const handleTaskKeyDown = (currentIdx, e) => {
-    if (e.key === "Enter" && !e.isComposing) {
+  const handleTaskKeyDown = (currentIdx, e, isComposing) => {
+    if (e.key === "Enter" && !isComposing) {
       addTaskToCategory(currentIdx, taskInputs[currentIdx]);
     }
   };

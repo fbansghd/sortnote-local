@@ -1,6 +1,9 @@
+import { useState } from "react";
 import styles from "../App.module.scss";
 
 function Sidebar({ text, setText, addCategory, categories, toggleCategoryCollapse }) {
+  const [isComposing, setIsComposing] = useState(false);
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.categoryInputStyle}>
@@ -9,8 +12,10 @@ function Sidebar({ text, setText, addCategory, categories, toggleCategoryCollaps
           placeholder=" input category here"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={() => setIsComposing(false)}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.isComposing) {
+            if (e.key === "Enter" && !isComposing) {
               addCategory();
             }
           }}

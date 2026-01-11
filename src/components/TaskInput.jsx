@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "../App.module.scss";
 
 function TaskInput({
@@ -12,6 +13,7 @@ function TaskInput({
   onAddClick,
 }) {
   const currentIdx = isMobile ? mobileCategoryIndex : categoryIndex;
+  const [isComposing, setIsComposing] = useState(false);
 
   return (
     <div className={styles.inputBtnContainer}>
@@ -35,7 +37,9 @@ function TaskInput({
               placeholder="input task"
               value={taskInputs[currentIdx] || ""}
               onChange={(e) => onInputChange(currentIdx, e.target.value)}
-              onKeyDown={(e) => onKeyDown(currentIdx, e)}
+              onCompositionStart={() => setIsComposing(true)}
+              onCompositionEnd={() => setIsComposing(false)}
+              onKeyDown={(e) => onKeyDown(currentIdx, e, isComposing)}
             />
             <button className={styles.addBtn} onClick={() => onAddClick(currentIdx)}>
               add
