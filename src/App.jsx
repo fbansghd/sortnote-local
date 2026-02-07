@@ -54,7 +54,6 @@ function App() {
         isSidebarVisible={isSidebarVisible}
         setIsSidebarVisible={setIsSidebarVisible}
       />
-      <br />
       <div className={styles.body}>
         {isSidebarVisible && (
           <Sidebar
@@ -102,8 +101,6 @@ function App() {
                     id={activeTask.id}
                     text={activeTask.text}
                     done={activeTask.done}
-                    onToggle={() => {}}
-                    onDelete={() => {}}
                     isOverlay={true}
                   />
                 ) : activeCategory ? (
@@ -119,8 +116,6 @@ function App() {
                           id={taskItem.id}
                           text={taskItem.text}
                           done={taskItem.done}
-                          onToggle={() => {}}
-                          onDelete={() => {}}
                         />
                       ))}
                     </div>

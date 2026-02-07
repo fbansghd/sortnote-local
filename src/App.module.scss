@@ -33,11 +33,11 @@
   --task-bg: #68afdf;
   --task-done-color: #727272;
   --task-done-bg: #b8d5ee;
-  --categroy-handle: #ddeefc;
+  --category-handle: #ddeefc;
   --category-border: #2b5674ff;
   --category-border-overlay: #2b5674ff;
   --category-bg: #ddd9a4;
-  --collaspe-btn: #0F4C75;
+  --collapse-btn: #0F4C75;
 }
 
 // テーマB
@@ -74,7 +74,7 @@
   --category-border: #b3a6a6;
   --category-border-overlay: #b3a6a6;
   --category-bg: #fcf0ca;
-  --collaspe-btn: #393e465;
+  --collapse-btn: #393e46;
 }
 
 // ============================================
@@ -103,6 +103,7 @@ html {
 
 .body {
   display: flex;
+  margin-top: 1em;
 }
 
 .mainContainer {
@@ -208,7 +209,7 @@ html {
 
 // カテゴリハンドル
 .categoryHandle {
-  color: var(--categroy-handle);
+  color: var(--category-handle);
   background-color: var(--accent);
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
@@ -250,7 +251,7 @@ html {
   margin-right: 0.3em;
   cursor: pointer;
   font-size: 1.3rem;
-  color: var(--collaspe-btn);
+  color: var(--collapse-btn);
   z-index: 3;
   pointer-events: auto;
 }

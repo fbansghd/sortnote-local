@@ -4,9 +4,8 @@ import { motion } from "framer-motion";
 import styles from "../App.module.scss";
 import { ANIMATION_DURATION_SHORT, ANIMATION_EASING } from "../constants";
 
-function SortableCategory({ id, label, children, isOverlay, transform: overlayTransform, onDelete, onCollapse }) {
+function SortableCategory({ id, label, children, isOverlay, onDelete, onCollapse }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-  const appliedTransform = isOverlay ? overlayTransform : transform;
 
   const categoryClass = `${styles.sortableCategory} ${isOverlay ? styles.overlay : ""} ${isDragging ? styles.dragging : ""}`;
 
@@ -24,7 +23,7 @@ function SortableCategory({ id, label, children, isOverlay, transform: overlayTr
       transition={{ duration: ANIMATION_DURATION_SHORT }}
       className={categoryClass}
       style={{
-        transform: appliedTransform ? CSS.Transform.toString(appliedTransform) : undefined,
+        transform: transform ? CSS.Transform.toString(transform) : undefined,
         transition: transition || `transform ${ANIMATION_DURATION_SHORT}s ${ANIMATION_EASING}`,
       }}
       {...attributes}

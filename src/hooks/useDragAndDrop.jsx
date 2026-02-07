@@ -7,7 +7,7 @@ export function useDragAndDrop(categories, setCategories) {
 
   const resetActiveItems = () => {
     setActiveTask(null);
-    setTimeout(() => setActiveCategory(null), 0);
+    setActiveCategory(null);
   };
 
   const moveCategory = (activeCategoryIndex, overCategoryIndex) => {
