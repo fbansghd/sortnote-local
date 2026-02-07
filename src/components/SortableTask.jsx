@@ -1,6 +1,5 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { motion } from "framer-motion";
 import styles from "../App.module.scss";
 import { ANIMATION_DURATION_LONG, ANIMATION_EASING } from "../constants";
 
@@ -11,13 +10,8 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay }) {
   const textClass = `${done ? styles.done : ""} ${styles.grab} ${styles.taskText} ${isOverlay ? styles.overlay : ""}`;
 
   return (
-    <motion.div
+    <div
       ref={setNodeRef}
-      layout
-      initial={isOverlay ? { opacity: 1, scale: 1, y: 10 } : false}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={isOverlay ? { opacity: 0, scale: 1, y: -20 } : { opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: ANIMATION_DURATION_LONG }}
       className={taskClass}
       style={{
         transform: CSS.Transform.toString(transform),
@@ -53,7 +47,7 @@ function SortableTask({ id, text, done, onToggle, onDelete, isOverlay }) {
           </span>
         </span>
       )}
-    </motion.div>
+    </div>
   );
 }
 
