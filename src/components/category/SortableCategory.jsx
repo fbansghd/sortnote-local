@@ -1,8 +1,8 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
-import styles from "../App.module.scss";
-import { ANIMATION_DURATION_SHORT, ANIMATION_EASING } from "../constants";
+import styles from "../../App.module.scss";
+import { ANIMATION_DURATION_SHORT, ANIMATION_EASING } from "../../constants";
 
 function SortableCategory({ id, label, children, isOverlay, onDelete, onCollapse }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });

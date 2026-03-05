@@ -21,6 +21,9 @@
 # local history
 .history
 
+# Claude Code
+.claude/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

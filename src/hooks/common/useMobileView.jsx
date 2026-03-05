@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MOBILE_BREAKPOINT } from "../constants";
+import { MOBILE_BREAKPOINT } from "../../constants";
 
 export function useMobileView(categories) {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_BREAKPOINT);

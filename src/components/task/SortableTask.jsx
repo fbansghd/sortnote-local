@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import styles from "../App.module.scss";
-import { ANIMATION_DURATION_LONG, ANIMATION_EASING } from "../constants";
+import styles from "../../App.module.scss";
+import { ANIMATION_DURATION_LONG, ANIMATION_EASING } from "../../constants";
 
 function SortableTask({ id, text, done, onToggle = () => {}, onDelete = () => {}, isOverlay }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });

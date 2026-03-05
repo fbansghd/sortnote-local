@@ -1,8 +1,8 @@
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import SortableCategory from "./SortableCategory";
-import SortableTask from "./SortableTask";
-import TaskInput from "./TaskInput";
-import styles from "../App.module.scss";
+import SortableTask from "../task/SortableTask";
+import TaskInput from "../task/TaskInput";
+import styles from "../../App.module.scss";
 
 function CategoryList({
   categories,

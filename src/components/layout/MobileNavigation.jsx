@@ -1,4 +1,4 @@
-import styles from "../App.module.scss";
+import styles from "../../App.module.scss";
 
 function MobileNavigation({ direction, onClick }) {
   return (

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useLocalStorage } from "./useLocalStorage";
+import { useLocalStorage } from "../common/useLocalStorage";
 
 export function useCategoryManagement() {
   const [text, setText] = useState("");

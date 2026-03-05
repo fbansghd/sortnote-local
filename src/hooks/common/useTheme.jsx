@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import styles from "../App.module.scss";
+import styles from "../../App.module.scss";
 
 export function useTheme() {
   const [isAltColor, setIsAltColor] = useLocalStorage("isAltColor", false);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../App.module.scss";
+import styles from "../../App.module.scss";
 
 function Sidebar({ text, setText, addCategory, categories, toggleCategoryCollapse }) {
   const [isComposing, setIsComposing] = useState(false);

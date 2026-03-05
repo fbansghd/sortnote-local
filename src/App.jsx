@@ -1,16 +1,16 @@
 import { DndContext, DragOverlay, pointerWithin, TouchSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import styles from "./App.module.scss";
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import MobileNavigation from "./components/MobileNavigation";
-import CategoryList from "./components/CategoryList";
-import SortableCategory from "./components/SortableCategory";
-import SortableTask from "./components/SortableTask";
-import { useTheme } from "./hooks/useTheme";
-import { useCategoryManagement } from "./hooks/useCategoryManagement";
-import { useTaskManagement } from "./hooks/useTaskManagement";
-import { useDragAndDrop } from "./hooks/useDragAndDrop";
-import { useMobileView } from "./hooks/useMobileView";
+import Header from "./components/layout/Header";
+import Sidebar from "./components/layout/Sidebar";
+import MobileNavigation from "./components/layout/MobileNavigation";
+import CategoryList from "./components/category/CategoryList";
+import SortableCategory from "./components/category/SortableCategory";
+import SortableTask from "./components/task/SortableTask";
+import { useTheme } from "./hooks/common/useTheme";
+import { useCategoryManagement } from "./hooks/category/useCategoryManagement";
+import { useTaskManagement } from "./hooks/task/useTaskManagement";
+import { useDragAndDrop } from "./hooks/dnd/useDragAndDrop";
+import { useMobileView } from "./hooks/common/useMobileView";
 
 function App() {
   const { isAltColor, setIsAltColor } = useTheme();
