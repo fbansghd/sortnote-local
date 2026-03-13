@@ -14,6 +14,7 @@
   --delete-icon-color: #f0b471;
   --delete-icon-hover: #b71c1c;
   --done-icon-color: #97d89a;
+  --done-icon-hover: #388e3c;
   --input-background-focus: #BBE1FA;
   --input-bg: #efeefd;
   --input-border-focus: #0F4C75;
@@ -52,6 +53,7 @@
   --delete-icon-color: #fd8578;
   --delete-icon-hover: #b71c1c;
   --done-icon-color: #8fc791;
+  --done-icon-hover: #388e3c;
   --input-background-focus: #FFE2E2;
   --input-bg: #f8e4ea;
   --input-border-focus: #ff9800;
@@ -74,6 +76,7 @@
   --category-border: #b3a6a6;
   --category-border-overlay: #b3a6a6;
   --category-bg: #fcf0ca;
+  --category-handle: #8785A2;
   --collapse-btn: #393e46;
 }
 
@@ -339,6 +342,7 @@ html {
   padding-right: 0.5em;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -562,7 +566,7 @@ html {
   display: inline-block;
   font-size: 1.6rem;
   font-weight: bold;
-  color: #0F4C75;
+  color: var(--main-color);
   cursor: pointer;
   user-select: none;
   margin-left: 0.5rem;
@@ -570,7 +574,7 @@ html {
 
   &:hover,
   &:focus {
-    color: #0F4C75;
+    color: var(--main-color);
     transform: scale(1.15);
     outline: none;
   }
