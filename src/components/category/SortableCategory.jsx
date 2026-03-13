@@ -1,6 +1,5 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { motion } from "framer-motion";
 import styles from "../../App.module.scss";
 import { ANIMATION_DURATION_SHORT, ANIMATION_EASING } from "../../constants";
 
@@ -10,17 +9,8 @@ function SortableCategory({ id, label, children, isOverlay, onDelete, onCollapse
   const categoryClass = `${styles.sortableCategory} ${isOverlay ? styles.overlay : ""} ${isDragging ? styles.dragging : ""}`;
 
   return (
-    <motion.div
+    <div
       ref={setNodeRef}
-      layout
-      initial={isOverlay ? { opacity: 1, scale: 1, y: 10 } : false}
-      animate={
-        isOverlay
-          ? { opacity: 1, scale: 1, y: 0 }
-          : { opacity: 1, scale: 1, y: 0 }
-      }
-      exit={isOverlay ? { opacity: 0, scale: 1, y: -20 } : { opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: ANIMATION_DURATION_SHORT }}
       className={categoryClass}
       style={{
         transform: transform ? CSS.Transform.toString(transform) : undefined,
@@ -58,7 +48,7 @@ function SortableCategory({ id, label, children, isOverlay, onDelete, onCollapse
         </div>
       </div>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
