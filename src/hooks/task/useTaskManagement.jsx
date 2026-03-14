@@ -2,67 +2,62 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export function useTaskManagement(categories, setCategories) {
-  const [taskInputs, setTaskInputs] = useState([]);
+  const [taskInputs, setTaskInputs] = useState({});
   const [isTaskInputVisible, setIsTaskInputVisible] = useState({});
 
   const sortTasks = (tasks) => tasks.slice().sort((a, b) => a.done - b.done);
 
-  const addTaskToCategory = (catIdx, task) => {
+  const addTaskToCategory = (catId, task) => {
     if (!task) return;
-    setCategories((prev) => {
-      const newCategories = [...prev];
-      const tasks = [...newCategories[catIdx].tasks, { id: uuidv4(), text: task, done: false }];
-      newCategories[catIdx].tasks = sortTasks(tasks);
-      return newCategories;
-    });
-    const newInputs = [...taskInputs];
-    newInputs[catIdx] = "";
-    setTaskInputs(newInputs);
+    setCategories((prev) =>
+      prev.map((cat) => {
+        if (cat.id !== catId) return cat;
+        return { ...cat, tasks: sortTasks([...cat.tasks, { id: uuidv4(), text: task, done: false }]) };
+      })
+    );
+    setTaskInputs((prev) => ({ ...prev, [catId]: "" }));
   };
 
-  const toggleTaskDone = (catIdx, taskId) => {
-    setCategories((prev) => {
-      const newCategories = [...prev];
-      const tasks = newCategories[catIdx].tasks.map((task) =>
-        task.id === taskId ? { ...task, done: !task.done } : task
-      );
-      newCategories[catIdx].tasks = sortTasks(tasks);
-      return newCategories;
-    });
+  const toggleTaskDone = (catId, taskId) => {
+    setCategories((prev) =>
+      prev.map((cat) => {
+        if (cat.id !== catId) return cat;
+        return {
+          ...cat,
+          tasks: sortTasks(cat.tasks.map((task) => task.id === taskId ? { ...task, done: !task.done } : task)),
+        };
+      })
+    );
   };
 
-  const deleteTask = (catIdx, taskId) => {
-    setCategories((prev) => {
-      const newCategories = [...prev];
-      const tasks = newCategories[catIdx].tasks.filter((task) => task.id !== taskId);
-      newCategories[catIdx].tasks = sortTasks(tasks);
-      return newCategories;
-    });
+  const deleteTask = (catId, taskId) => {
+    setCategories((prev) =>
+      prev.map((cat) => {
+        if (cat.id !== catId) return cat;
+        return { ...cat, tasks: sortTasks(cat.tasks.filter((task) => task.id !== taskId)) };
+      })
+    );
   };
 
-  const handleToggleTaskInput = (categoryIndex) => {
+  const handleToggleTaskInput = (categoryId) => {
     setIsTaskInputVisible((prev) => ({
       ...prev,
-      [categoryIndex]: !prev[categoryIndex],
+      [categoryId]: !prev[categoryId],
     }));
   };
 
-  const handleTaskInputChange = (currentIdx, value) => {
-    setTaskInputs((prev) => {
-      const newInputs = [...prev];
-      newInputs[currentIdx] = value;
-      return newInputs;
-    });
+  const handleTaskInputChange = (catId, value) => {
+    setTaskInputs((prev) => ({ ...prev, [catId]: value }));
   };
 
-  const handleTaskKeyDown = (currentIdx, e, isComposing) => {
+  const handleTaskKeyDown = (catId, e, isComposing) => {
     if (e.key === "Enter" && !isComposing) {
-      addTaskToCategory(currentIdx, taskInputs[currentIdx]);
+      addTaskToCategory(catId, taskInputs[catId]);
     }
   };
 
-  const handleTaskAddClick = (currentIdx) => {
-    addTaskToCategory(currentIdx, taskInputs[currentIdx]);
+  const handleTaskAddClick = (catId) => {
+    addTaskToCategory(catId, taskInputs[catId]);
   };
 
   return {

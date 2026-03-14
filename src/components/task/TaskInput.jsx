@@ -2,9 +2,7 @@ import { useState } from "react";
 import styles from "../../App.module.scss";
 
 function TaskInput({
-  categoryIndex,
-  mobileCategoryIndex,
-  isMobile,
+  categoryId,
   isTaskInputVisible,
   onToggleTaskInput,
   taskInputs,
@@ -12,7 +10,6 @@ function TaskInput({
   onKeyDown,
   onAddClick,
 }) {
-  const currentIdx = isMobile ? mobileCategoryIndex : categoryIndex;
   const [isComposing, setIsComposing] = useState(false);
 
   return (
@@ -20,28 +17,28 @@ function TaskInput({
       <div className={styles.inputBtn}>
         <span
           className={styles.inputToggleIcon}
-          onClick={() => onToggleTaskInput(categoryIndex)}
+          onClick={() => onToggleTaskInput(categoryId)}
           tabIndex={0}
           role="button"
           aria-label="タスク入力欄の表示切替"
           style={{ marginTop: "0.5rem" }}
         >
-          {isTaskInputVisible[categoryIndex] ? "−" : "+"}
+          {isTaskInputVisible[categoryId] ? "−" : "+"}
         </span>
       </div>
       <div>
-        {isTaskInputVisible[categoryIndex] && (
+        {isTaskInputVisible[categoryId] && (
           <div className={styles.memoInputStyle}>
             <input
               className={styles.memoInput}
               placeholder="input task"
-              value={taskInputs[currentIdx] || ""}
-              onChange={(e) => onInputChange(currentIdx, e.target.value)}
+              value={taskInputs[categoryId] || ""}
+              onChange={(e) => onInputChange(categoryId, e.target.value)}
               onCompositionStart={() => setIsComposing(true)}
               onCompositionEnd={() => setIsComposing(false)}
-              onKeyDown={(e) => onKeyDown(currentIdx, e, isComposing)}
+              onKeyDown={(e) => onKeyDown(categoryId, e, isComposing)}
             />
-            <button className={styles.addBtn} onClick={() => onAddClick(currentIdx)}>
+            <button className={styles.addBtn} onClick={() => onAddClick(categoryId)}>
               add
             </button>
           </div>

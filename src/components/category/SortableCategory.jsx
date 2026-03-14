@@ -13,7 +13,7 @@ function SortableCategory({ id, label, children, isOverlay, onDelete, onCollapse
       ref={setNodeRef}
       className={categoryClass}
       style={{
-        transform: transform ? CSS.Transform.toString(transform) : undefined,
+        transform: transform ? CSS.Transform.toString({ ...transform, y: 0 }) : undefined,
         transition: transition || `transform ${ANIMATION_DURATION_SHORT}s ${ANIMATION_EASING}`,
       }}
       {...attributes}

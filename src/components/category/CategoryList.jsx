@@ -31,7 +31,7 @@ function CategoryList({
             label={categoryItem.category}
             onDelete={() => {
               if (window.confirm("本当にこのカテゴリを削除しますか？")) {
-                deleteCategory(categoryIndex);
+                deleteCategory(categoryItem.id);
               }
             }}
             onCollapse={() => toggleCategoryCollapse(categoryItem.id)}
@@ -48,15 +48,13 @@ function CategoryList({
                       id={taskItem.id}
                       text={taskItem.text}
                       done={taskItem.done}
-                      onToggle={() => toggleTaskDone(categoryIndex, taskItem.id)}
-                      onDelete={() => deleteTask(categoryIndex, taskItem.id)}
+                      onToggle={() => toggleTaskDone(categoryItem.id, taskItem.id)}
+                      onDelete={() => deleteTask(categoryItem.id, taskItem.id)}
                     />
                   ))}
                 </SortableContext>
                 <TaskInput
-                  categoryIndex={categoryIndex}
-                  mobileCategoryIndex={mobileCategoryIndex}
-                  isMobile={isMobile}
+                  categoryId={categoryItem.id}
                   isTaskInputVisible={isTaskInputVisible}
                   onToggleTaskInput={handleToggleTaskInput}
                   taskInputs={taskInputs}

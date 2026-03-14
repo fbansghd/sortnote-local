@@ -27,8 +27,8 @@ export function useCategoryManagement() {
     setText("");
   };
 
-  const deleteCategory = (catIdx) => {
-    setCategories((categories) => categories.filter((_, i) => i !== catIdx));
+  const deleteCategory = (catId) => {
+    setCategories((categories) => categories.filter((cat) => cat.id !== catId));
   };
 
   const toggleCategoryCollapse = (categoryId) => {
